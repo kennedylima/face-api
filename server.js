@@ -6,8 +6,6 @@ const server = express();
 
 server.use(express.static(__dirname));
 
-
-
 server.listen(porta, endereco, () => {
   console.log('Face API Started');
 }) 
