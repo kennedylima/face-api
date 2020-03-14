@@ -37,12 +37,6 @@ Promise.all([
   }
 });
 
-
-// video.addEventListener('play', () => {
-  
-//   detectAllFaces();
-// })
-
 function detectAllFaces(){
   let canvas = document.getElementById('overlay');
   console.log(new faceapi.TinyFaceDetectorOptions());
@@ -52,7 +46,7 @@ function detectAllFaces(){
   .withAgeAndGender()
   .withFaceDescriptor()
   .then( results => {
-    // console.log(video, canvas);
+
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     canvas.setAttribute('width' , canvas.width);
     canvas.setAttribute('height', canvas.height);
@@ -62,30 +56,17 @@ function detectAllFaces(){
 
       if(results.expressions.happy >= 0.9) {
         canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);  
-        // console.log(results);
         canvas.toBlob(blob => {
-          // console.log(blob);
           document.getElementById("image").src = window.URL.createObjectURL(blob);
         });
       }
       
-      // faceapi.draw.drawDetections(canvas, results);
-      // faceapi.draw.options.anchorPosition = 'BOTTOM_LEFT';
       faceapi.draw.drawFaceLandmarks(canvas, results);
       faceapi.draw.drawFaceExpressions(canvas, results);
       faceapi.draw.DrawTextField(canvas, results);
       
     }
 
-    
-    // drawBox.draw(canvas);
-    
-    console.log(faceapi.draw);
-
-    // faceapi.draw.drawDetections(canvas, results.map(res => res.detection), drawOptions);
-    // faceapi.draw.drawFaceLandmarks(canvas, results.map(res => res.landmarks));
-   
-    console.log('detecting ...');
     setTimeout(() => {
       detectAllFaces();
     }, 0);
