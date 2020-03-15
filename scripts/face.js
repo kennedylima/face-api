@@ -33,7 +33,6 @@ Promise.all([
     .then((stream) => {
       video.srcObject = stream; 
     });
-    console.log(faceapi);
   }
 });
 
@@ -46,14 +45,11 @@ function detectAllFaces(){
   .withAgeAndGender()
   .withFaceDescriptor()
   .then( results => {
-
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
     canvas.setAttribute('width' , canvas.width);
     canvas.setAttribute('height', canvas.height);
 
-    console.log(results);
     if(results){
-
       if(results.expressions.happy >= 0.9) {
         canvas.getContext('2d').drawImage(video, 0, 0, video.videoWidth, video.videoHeight);  
         canvas.toBlob(blob => {
@@ -64,12 +60,10 @@ function detectAllFaces(){
       faceapi.draw.drawFaceLandmarks(canvas, results);
       faceapi.draw.drawFaceExpressions(canvas, results);
       faceapi.draw.DrawTextField(canvas, results);
-      
     }
 
     setTimeout(() => {
       detectAllFaces();
     }, 0);
   })
-  
 }
